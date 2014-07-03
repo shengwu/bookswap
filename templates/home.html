@@ -71,7 +71,8 @@ var books = new Bloodhound({
 var courses = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('query'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: 'http://vazzak2.ci.northwestern.edu/courses_summary/?term=4550&subject=%QUERY'
+  limit: 300,
+  remote: 'http://vazzak2.ci.northwestern.edu/courses_summary/?term=4530&subject=%QUERY'
 });
  
 books.initialize();
@@ -79,6 +80,7 @@ courses.initialize();
  
 $('.book-search').typeahead({
   highlight: true,
+  minLength: 3
 },
 {
   name: 'books',
