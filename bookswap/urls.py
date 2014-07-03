@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'bookswap.views.home'),
+    url(r'^book_search/$', 'bookswap.views.book_search'),
 )

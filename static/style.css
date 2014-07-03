@@ -7,3 +7,12 @@
 .book-search {
     font-size: 20px;
 }
+.book-search,
+.tt-dropdown-menu {
+    min-width: 600px;
+}
+.typeahead-title {
+    padding: 0 20px 7px;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}

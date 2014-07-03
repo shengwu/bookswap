@@ -3,6 +3,48 @@
 
 {% block title %}new Bookswap demo{% endblock title %}
 
+{% block style %}
+<style>
+.tt-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  padding: 5px 0 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 18px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  text-align: left;
+}
+.tt-suggestion > p {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.428571429;
+  color: #333333;
+  white-space: nowrap;
+}
+.tt-suggestion > p:hover,
+.tt-suggestion > p:focus,
+.tt-suggestion.tt-cursor p {
+  color: #ffffff;
+  text-decoration: none;
+  outline: 0;
+  background-color: #428bca;
+}
+</style>
+{% endblock style %}
+
 {% block content %}
 <div class="row text-center top100">
   <div class="col-md-12">
@@ -20,6 +62,45 @@
 {% block scripts %}
 <script src="{% static 'js/typeahead.bundle.min.js' %}"></script>
 <script>
-
+var books = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('query'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: '/book_search/?query=%QUERY'
+});
+ 
+var courses = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('query'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: 'http://vazzak2.ci.northwestern.edu/courses_summary/?term=4550&subject=%QUERY'
+});
+ 
+books.initialize();
+courses.initialize();
+ 
+$('.book-search').typeahead({
+  highlight: true,
+},
+{
+  name: 'books',
+  displayKey: 'title',
+  source: books.ttAdapter(),
+  templates: {
+    header: '<h3 class="typeahead-title">Books</h3>',
+    suggestion: function(obj) {
+      return '<p>' + obj.author + ' - ' + obj.title + ' (' + obj.edition.toString() + 'th ed)</p>';
+    },
+  }
+},
+{
+  name: 'courses',
+  displayKey: 'title',
+  source: courses.ttAdapter(),
+  templates: {
+    header: '<h3 class="typeahead-title">Courses</h3>',
+    suggestion: function(obj) {
+      return '<p>' + obj.subject + ' ' + obj.catalog_num + ': ' + obj.title + '</p>';
+    },
+  }
+});
 </script>
 {% endblock scripts %}
