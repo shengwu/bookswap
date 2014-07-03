@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}new Bookswap demo{% endblock title %}
+
+{% block content %}
+<div class="row text-center top100">
+  <div class="col-md-12">
+    <h1>Bookswap demo</h1>
+  </div>
+</div>
+
+<div class="row text-center top100">
+  <div class="col-md-12">
+    <input type="text" class="book-search form-control" placeholder="Search for books or classes">
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/typeahead.bundle.min.js' %}"></script>
+<script>
+
+</script>
+{% endblock scripts %}
